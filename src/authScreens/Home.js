@@ -1,15 +1,14 @@
 import React from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
+import {baseProps} from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
 import {useAuth} from '../contexts/AuthContext';
 
-export default function Home() {
-  const {user, logout} = useAuth();
+export default function Home({type}) {
+  const {user} = useAuth();
   return (
     <View style={styles.container}>
-      <Text style={{fontSize: 30}}>Welcome User</Text>
-      <Text style={{fontSize: 20}}>{user.email}</Text>
-      <Text style={{fontSize: 16}}>{user.uid}</Text>
-      <Button title="Logout" color="orange" onPress={logout} />
+      <Text style={{fontSize: 30}}>Home</Text>
+      <Text style={{fontSize: 30}}>{type}</Text>
     </View>
   );
 }
