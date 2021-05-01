@@ -1,14 +1,9 @@
 import React, {useState} from 'react';
-import {
-  Button,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Button, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {TextInput} from 'react-native-paper';
 import {useAuth} from '../contexts/AuthContext';
 import {useMsg} from '../contexts/MsgContext';
+import {globalColors, globalStyles} from '../styles/styles';
 
 export default function Login({navigation}) {
   const {login} = useAuth();
@@ -29,18 +24,27 @@ export default function Login({navigation}) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={{...styles.text, fontSize: 20}}>Login</Text>
+    <View style={{...styles.container, ...globalStyles.component}}>
+      <Text
+        style={{
+          ...styles.text,
+          ...globalStyles.textTitle,
+          color: globalColors.Info,
+        }}>
+        Login
+      </Text>
       <View style={{marginVertical: 10}}>
         <TextInput
+          mode="outlined"
           style={styles.input}
-          placeholder="Email"
+          label="Email"
           value={email}
           onChangeText={setEmail}
         />
         <TextInput
+          mode="outlined"
           style={styles.input}
-          placeholder="Password"
+          label="Password"
           value={password}
           onChangeText={setPassword}
           secureTextEntry
@@ -52,7 +56,14 @@ export default function Login({navigation}) {
       <TouchableOpacity
         style={styles.btn}
         onPress={() => navigation.replace('Register')}>
-        <Text style={styles.text}>Register new account...</Text>
+        <Text
+          style={{
+            ...styles.text,
+            ...globalStyles.textSubTitle,
+            color: globalColors.Light,
+          }}>
+          Register new account...
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -60,16 +71,9 @@ export default function Login({navigation}) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingHorizontal: 50,
-    // alignItems: 'center',
     justifyContent: 'center',
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#333',
-    borderStyle: 'solid',
-    padding: 5,
     marginVertical: 5,
   },
   btn: {

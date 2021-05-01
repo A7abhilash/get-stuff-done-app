@@ -1,14 +1,9 @@
 import React, {useState} from 'react';
-import {
-  Button,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Button, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {TextInput} from 'react-native-paper';
 import {useAuth} from '../contexts/AuthContext';
 import {useMsg} from '../contexts/MsgContext';
+import {globalColors, globalStyles} from '../styles/styles';
 
 export default function Register({navigation}) {
   const {register} = useAuth();
@@ -38,25 +33,35 @@ export default function Register({navigation}) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={{...styles.text, fontSize: 20}}>Register</Text>
+    <View style={{...styles.container, ...globalStyles.component}}>
+      <Text
+        style={{
+          ...styles.text,
+          ...globalStyles.textTitle,
+          color: globalColors.Info,
+        }}>
+        Register
+      </Text>
       <View style={{marginVertical: 10}}>
         <TextInput
+          mode="outlined"
           style={styles.input}
-          placeholder="Email"
+          label="Email"
           value={email}
           onChangeText={setEmail}
         />
         <TextInput
+          mode="outlined"
           style={styles.input}
-          placeholder="Password"
+          label="Password"
           value={password}
           onChangeText={setPassword}
           secureTextEntry
         />
         <TextInput
+          mode="outlined"
           style={styles.input}
-          placeholder="Confirm Password"
+          label="Confirm Password"
           value={cPassword}
           onChangeText={setCPassword}
           secureTextEntry
@@ -68,7 +73,14 @@ export default function Register({navigation}) {
       <TouchableOpacity
         style={styles.btn}
         onPress={() => navigation.replace('Login')}>
-        <Text style={styles.text}>Login with existing account...</Text>
+        <Text
+          style={{
+            ...styles.text,
+            ...globalStyles.textSubTitle,
+            color: globalColors.Light,
+          }}>
+          Login with existing account...
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -76,16 +88,9 @@ export default function Register({navigation}) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingHorizontal: 50,
-    // alignItems: 'center',
     justifyContent: 'center',
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#333',
-    borderStyle: 'solid',
-    padding: 5,
     marginVertical: 5,
   },
   btn: {
