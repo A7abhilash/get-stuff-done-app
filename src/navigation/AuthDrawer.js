@@ -1,12 +1,10 @@
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import Todos from '../authScreens/Todos';
+import Tasks from '../authScreens/Tasks';
 import {globalColors} from '../styles/styles';
 
 export default function AuthDrawer() {
   const Drawer = createDrawerNavigator();
-
-  const times = ['Today', 'This Week', 'Later', 'Pending', 'Completed'];
 
   return (
     <Drawer.Navigator
@@ -18,7 +16,7 @@ export default function AuthDrawer() {
         inactiveTintColor: globalColors.Light,
         activeBackgroundColor: globalColors.Secondary,
       }}>
-      {times.map(time => (
+      {/* {times.map(time => (
         <Drawer.Screen
           name={time}
           key={time}
@@ -27,9 +25,18 @@ export default function AuthDrawer() {
               marginVertical: 0,
             },
           }}>
-          {props => <Todos {...props} type={time} />}
+          {props => <Tasks {...props} type={time} />}
         </Drawer.Screen>
-      ))}
+      ))} */}
+      <Drawer.Screen
+        name="All"
+        options={{
+          headerStyle: {
+            marginVertical: 0,
+          },
+        }}>
+        {props => <Tasks {...props} />}
+      </Drawer.Screen>
     </Drawer.Navigator>
   );
 }
