@@ -3,7 +3,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import Tasks from '../authScreens/Tasks';
 import {globalColors} from '../styles/styles';
 
-export default function AuthDrawer() {
+export default function AuthDrawer({navigation: stackNavigation}) {
   const Drawer = createDrawerNavigator();
 
   return (
@@ -35,7 +35,7 @@ export default function AuthDrawer() {
             marginVertical: 0,
           },
         }}>
-        {props => <Tasks {...props} />}
+        {props => <Tasks {...props} stackNavigation={stackNavigation} />}
       </Drawer.Screen>
     </Drawer.Navigator>
   );

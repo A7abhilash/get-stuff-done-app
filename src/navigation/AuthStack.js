@@ -1,10 +1,11 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import AuthDrawer from './AuthDrawer';
+import NewTask from './../authScreens/NewTask';
 import {TouchableOpacity} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useAuth} from '../contexts/AuthContext';
-import {globalColors, globalStyles} from '../styles/styles';
+import {globalColors} from '../styles/styles';
 
 export default function AuthStack() {
   const Stack = createStackNavigator();
@@ -20,6 +21,7 @@ export default function AuthStack() {
         headerTintColor: globalColors.Light,
       }}>
       <Stack.Screen name="AuthDrawer" component={AuthDrawer} />
+      <Stack.Screen name="New Task" component={NewTask} />
     </Stack.Navigator>
   );
 }
