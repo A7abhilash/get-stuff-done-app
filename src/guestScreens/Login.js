@@ -35,14 +35,14 @@ export default function Login({navigation}) {
       </Text>
       <View style={{marginVertical: 10}}>
         <TextInput
-          mode="outlined"
+          mode="flat"
           style={styles.input}
           label="Email"
           value={email}
           onChangeText={setEmail}
         />
         <TextInput
-          mode="outlined"
+          mode="flat"
           style={styles.input}
           label="Password"
           value={password}

@@ -23,7 +23,7 @@ const globalStyles = StyleSheet.create({
 const globalColors = {
   Dark: '#343a40',
   Secondary: '#6c757d',
-  Tab: '#50555a',
+  Gray: '#50555a',
   Card: '#50555a',
   Light: '#f8f9fa',
   Danger: '#dc3545',
