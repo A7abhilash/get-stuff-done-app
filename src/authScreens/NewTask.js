@@ -110,7 +110,6 @@ export default function NewTask({tasks, navigation}) {
         setDateModalVisible={setDateModalVisible}
       />
       <SelectStatusModal
-        status={status}
         setStatus={setStatus}
         statusModalVisible={statusModalVisible}
         setStatusModalVisible={setStatusModalVisible}

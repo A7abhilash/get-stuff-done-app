@@ -2,6 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import AuthDrawer from './AuthDrawer';
 import NewTask from './../authScreens/NewTask';
+import NewTag from './../authScreens/NewTag';
 import {TouchableOpacity} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useAuth} from '../contexts/AuthContext';
@@ -22,6 +23,7 @@ export default function AuthStack() {
       }}>
       <Stack.Screen name="AuthDrawer" component={AuthDrawer} />
       <Stack.Screen name="New Task" component={NewTask} />
+      <Stack.Screen name="New Tag" component={NewTag} />
     </Stack.Navigator>
   );
 }
