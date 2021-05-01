@@ -1,6 +1,6 @@
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import Home from '../authScreens/Home';
+import Todos from '../authScreens/Todos';
 
 export default function AuthDrawer() {
   const Drawer = createDrawerNavigator();
@@ -11,7 +11,7 @@ export default function AuthDrawer() {
     <Drawer.Navigator drawerPosition="left">
       {times.map(time => (
         <Drawer.Screen name={time} key={time}>
-          {props => <Home {...props} type={time} />}
+          {props => <Todos {...props} type={time} />}
         </Drawer.Screen>
       ))}
     </Drawer.Navigator>

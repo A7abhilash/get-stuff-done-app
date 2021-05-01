@@ -2,13 +2,14 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {baseProps} from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
 import {useAuth} from '../contexts/AuthContext';
+import {globalStyles, globalColors} from '../styles/styles';
 
-export default function Home({type}) {
+export default function Todos({type}) {
   const {user} = useAuth();
   return (
-    <View style={styles.container}>
-      <Text style={{fontSize: 30}}>Home</Text>
-      <Text style={{fontSize: 30}}>{type}</Text>
+    <View style={globalStyles.container}>
+      <Text style={{color: globalColors.Light, fontSize: 30}}>Todos</Text>
+      <Text style={{color: globalColors.Light, fontSize: 30}}>{type}</Text>
     </View>
   );
 }
