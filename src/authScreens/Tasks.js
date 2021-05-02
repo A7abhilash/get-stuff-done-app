@@ -2,11 +2,13 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Button, FAB} from 'react-native-paper';
 import SelectOptions from '../components/SelectOptions';
+import {useDB} from '../contexts/DBContext';
 import {globalStyles, globalColors} from '../styles/styles';
 
-export default function Tasks({tasks, stackNavigation}) {
+export default function Tasks({type, stackNavigation}) {
+  const {allTasks} = useDB();
   const [selectedOption, setSelectedOption] = useState('Today');
-  const [displayTasks, setDisplayTasks] = useState(null);
+  const [displayTasks, setDisplayTasks] = useState(allTasks);
 
   const setSelection = id => {
     setSelectedOption(id);

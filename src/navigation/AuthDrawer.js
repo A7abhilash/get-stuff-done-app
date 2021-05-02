@@ -52,7 +52,9 @@ export default function AuthDrawer({navigation: stackNavigation}) {
             options={{
               headerStyle: {},
             }}>
-            {props => <Tasks {...props} type={tag} />}
+            {props => (
+              <Tasks {...props} type={tag} stackNavigation={stackNavigation} />
+            )}
           </Drawer.Screen>
         ))}
     </Drawer.Navigator>

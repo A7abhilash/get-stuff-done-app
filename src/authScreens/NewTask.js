@@ -6,20 +6,30 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {Button, TextInput} from 'react-native-paper';
+import {Button, Switch, TextInput} from 'react-native-paper';
 import SelectDueDateModal from '../components/SelectDueDateModal';
 import SelectTagsModal from '../components/SelectTagsModal';
+import {useDB} from '../contexts/DBContext';
+import {useMsg} from '../contexts/MsgContext';
 import {globalStyles, globalColors} from '../styles/styles';
 
-export default function NewTask({tasks, navigation}) {
+export default function NewTask({navigation}) {
+  const {setAlert} = useMsg();
+  const {allTags, allTasks, saveTasks} = useDB();
   const [name, setName] = useState('');
   const [due, setDue] = useState(new Date());
-  const [tags, setTags] = useState(['2asdas', '1sadasdas', '2adsdas']);
+  const [tags, setTags] = useState([]);
   const [dateModalVisible, setDateModalVisible] = useState(false);
   const [tagsModalVisible, setTagsModalVisible] = useState(false);
   const [status, setStatus] = useState('Today');
+  const [done, setDone] = useState(false);
 
   const selectDate = () => {
+    if (done) {
+      setStatus('Completed');
+      return;
+    }
+
     let today = new Date().getTime();
     let dueDate = new Date(due).getTime();
     let diff = dueDate - today;
@@ -37,8 +47,35 @@ export default function NewTask({tasks, navigation}) {
     }
   };
 
-  const handlePress = () => {
-    // console.log(due);
+  const selectDone = val => {
+    setDone(val);
+    if (val) {
+      setStatus('Completed');
+    } else {
+      selectDate();
+    }
+  };
+
+  const handlePress = async () => {
+    if (name && tags.length) {
+      let newTask = {
+        name,
+        due,
+        status,
+        tags,
+        done,
+      };
+      let updatedTasks = [...allTasks];
+      updatedTasks.unshift(newTask);
+      await saveTasks(updatedTasks);
+      navigation.goBack();
+    } else {
+      setAlert({
+        title: 'Invalid',
+        msg: 'Blank fields are not allowed!',
+        text: 'Understood',
+      });
+    }
   };
 
   return (
@@ -80,18 +117,25 @@ export default function NewTask({tasks, navigation}) {
         </View>
         <View style={styles.horizontalView}>
           <Text
-            style={{...globalStyles.textSubTitle, color: globalColors.Light}}>
+            style={{
+              ...globalStyles.textSubTitle,
+              color: globalColors.Light,
+              flex: 0.2,
+            }}>
             Tags:
           </Text>
           <TouchableOpacity
             onPress={() => setTagsModalVisible(true)}
             style={{
-              marginLeft: 'auto',
               marginRight: 5,
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              flex: 0.8,
+              justifyContent: 'flex-end',
             }}>
             {tags.length ? (
               tags.map(item => (
-                <Text style={styles.textRight} key={item}>
+                <Text style={styles.textTags} key={item}>
                   {item}
                 </Text>
               ))
@@ -105,6 +149,29 @@ export default function NewTask({tasks, navigation}) {
               </Text>
             )}
           </TouchableOpacity>
+        </View>
+        <View style={styles.horizontalView}>
+          <Text
+            style={{...globalStyles.textSubTitle, color: globalColors.Light}}>
+            Done?
+          </Text>
+          <View
+            style={{
+              ...styles.textRight,
+              marginLeft: 'auto',
+              marginRight: 5,
+              backgroundColor: globalColors.Card,
+              paddingHorizontal: 5,
+              borderRadius: 5,
+            }}>
+            <Switch
+              value={done}
+              onValueChange={() => {
+                selectDone(!done);
+              }}
+              color={globalColors.Primary}
+            />
+          </View>
         </View>
         <Button
           style={{marginVertical: 10}}
@@ -122,6 +189,7 @@ export default function NewTask({tasks, navigation}) {
         setDateModalVisible={setDateModalVisible}
       />
       <SelectTagsModal
+        allTags={allTags}
         tags={tags}
         setTags={setTags}
         tagsModalVisible={tagsModalVisible}
@@ -147,5 +215,14 @@ const styles = StyleSheet.create({
   textRight: {
     ...globalStyles.textSubTitle,
     color: globalColors.Light,
+  },
+  textTags: {
+    color: globalColors.Light,
+    margin: 3,
+    backgroundColor: globalColors.Primary,
+    paddingVertical: 2,
+    paddingHorizontal: 4,
+    fontSize: 16,
+    borderRadius: 5,
   },
 });

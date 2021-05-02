@@ -20,8 +20,16 @@ export function DBProvider({children}) {
       let res = await firestore().collection('gsd').doc(user.uid).get();
       //   console.log(res.data());
       let {tags, tasks} = res.data();
-      setAllTags(tags);
-      setAllTasks(tasks);
+      if (tags) {
+        setAllTags(tags);
+      } else {
+        setAllTags([]);
+      }
+      if (tasks) {
+        setAllTasks(tasks);
+      } else {
+        setAllTasks([]);
+      }
     } catch (error) {
       console.log(error.message);
       setToast(error.message);

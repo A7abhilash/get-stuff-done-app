@@ -4,25 +4,18 @@ import {Button} from 'react-native-paper';
 import {globalColors, globalStyles} from '../styles/styles';
 
 const SelectTagsModal = ({
+  allTags,
   tags,
   setTags,
   tagsModalVisible,
   setTagsModalVisible,
 }) => {
-  const options = [
-    '1sadas',
-    '2asdas',
-    '3asdas',
-    '1sadasdas',
-    '2adsdas',
-    '3adsdas',
-  ];
   return (
     <Modal visible={tagsModalVisible} animationType="slide" transparent>
       <View style={styles.centeredView}>
         <View style={styles.innerView}>
           <View style={styles.displayTags}>
-            {options.map(item =>
+            {allTags.map(item =>
               tags.includes(item) ? (
                 <TouchableOpacity
                   key={item}
