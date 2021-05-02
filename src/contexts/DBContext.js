@@ -32,14 +32,13 @@ export function DBProvider({children}) {
     if (user) {
       fetchInfo();
     }
-  }, []);
+  }, [user]);
 
   const saveTags = async tags => {
     try {
       await firestore().collection('gsd').doc(user.uid).update({
         tags,
       });
-      // let {tags, tasks} = res.data();
       setAllTags(tags);
       setToast('Tags saved');
     } catch (error) {
