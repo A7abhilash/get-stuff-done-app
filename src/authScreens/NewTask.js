@@ -8,15 +8,15 @@ import {
 } from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import SelectDueDateModal from '../components/SelectDueDateModal';
-import SelectStatusModal from '../components/SelectStatusModal';
+import SelectTagsModal from '../components/SelectTagsModal';
 import {globalStyles, globalColors} from '../styles/styles';
 
 export default function NewTask({tasks, navigation}) {
   const [name, setName] = useState('');
   const [due, setDue] = useState(new Date());
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState(['2asdas', '1sadasdas', '2adsdas']);
   const [dateModalVisible, setDateModalVisible] = useState(false);
-  const [statusModalVisible, setStatusModalVisible] = useState(false);
+  const [tagsModalVisible, setTagsModalVisible] = useState(false);
   const [status, setStatus] = useState('Today');
 
   const selectDate = () => {
@@ -84,7 +84,7 @@ export default function NewTask({tasks, navigation}) {
             Tags:
           </Text>
           <TouchableOpacity
-            onPress={() => setDateModalVisible(true)}
+            onPress={() => setTagsModalVisible(true)}
             style={{
               marginLeft: 'auto',
               marginRight: 5,
@@ -92,7 +92,7 @@ export default function NewTask({tasks, navigation}) {
             {tags.length ? (
               tags.map(item => (
                 <Text style={styles.textRight} key={item}>
-                  {new Date(due).toDateString()}
+                  {item}
                 </Text>
               ))
             ) : (
@@ -121,10 +121,11 @@ export default function NewTask({tasks, navigation}) {
         dateModalVisible={dateModalVisible}
         setDateModalVisible={setDateModalVisible}
       />
-      <SelectStatusModal
-        setStatus={setStatus}
-        statusModalVisible={statusModalVisible}
-        setStatusModalVisible={setStatusModalVisible}
+      <SelectTagsModal
+        tags={tags}
+        setTags={setTags}
+        tagsModalVisible={tagsModalVisible}
+        setTagsModalVisible={setTagsModalVisible}
       />
     </View>
   );

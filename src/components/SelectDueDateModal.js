@@ -48,12 +48,10 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     justifyContent: 'flex-end',
-    // alignItems: 'center',
   },
   innerView: {
     marginHorizontal: 10,
     padding: 20,
-    // alignItems: 'center',
     backgroundColor: globalColors.Card,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
