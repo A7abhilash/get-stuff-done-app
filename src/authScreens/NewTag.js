@@ -4,18 +4,13 @@ import {TextInput, Button} from 'react-native-paper';
 import {globalColors, globalStyles} from '../styles/styles';
 import {useMsg} from '../contexts/MsgContext';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {useDB} from '../contexts/DBContext';
 
 const NewTag = () => {
   const {setAlert} = useMsg();
+  const {allTags, saveTags} = useDB();
   const [name, setName] = useState('');
-  const [tags, setTags] = useState([
-    '1sadas',
-    '2asdas',
-    '3asdas',
-    '1sadasdas',
-    '2adsdas',
-    '3adsdas',
-  ]);
+  const [tags, setTags] = useState(allTags);
 
   const addTag = () => {
     if (name) {
@@ -45,7 +40,8 @@ const NewTag = () => {
   };
 
   const handleSave = async () => {
-    console.log(tags);
+    // console.log(tags);
+    saveTags(tags);
   };
 
   return (
