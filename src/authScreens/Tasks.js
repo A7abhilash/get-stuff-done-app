@@ -6,6 +6,7 @@ import SelectOptions from '../components/SelectOptions';
 import TaskBox from '../components/TaskBox';
 import {useDB} from '../contexts/DBContext';
 import {globalStyles, globalColors} from '../styles/styles';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export default function Tasks({type, stackNavigation}) {
   const {loading, allTasks, fetchInfo} = useDB();
@@ -74,13 +75,19 @@ export default function Tasks({type, stackNavigation}) {
         </Text>
         <Button
           style={{marginLeft: 'auto', marginRight: 5}}
-          color={globalColors.Success}>
-          Save
+          color={globalColors.Success}
+          onPress={() => {
+            fetchInfo();
+            setDisplayTasks(null);
+          }}
+          disabled={loading}>
+          <MaterialIcons name="refresh" size={24} />
         </Button>
       </View>
       <SelectOptions
         selectedOption={selectedOption}
         selectOptions={setSelection}
+        loading={loading}
       />
       {loading && <Loading />}
       {displayTasks &&
@@ -90,8 +97,6 @@ export default function Tasks({type, stackNavigation}) {
             keyExtractor={item => item.uid}
             renderItem={({item}) => <TaskBox task={item} />}
             style={{marginBottom: 10}}
-            onRefresh={fetchInfo}
-            refreshing={loading}
           />
         ) : (
           <Text style={{color: globalColors.Light, textAlign: 'center'}}>
@@ -103,12 +108,14 @@ export default function Tasks({type, stackNavigation}) {
         onPress={() => stackNavigation.navigate('New Tag')}
         label="New Tag"
         color={globalColors.Warning}
+        disabled={loading}
       />
       <FAB
         style={styles.newTask}
         onPress={() => stackNavigation.navigate('New Task')}
         label="New Task"
         color={globalColors.Warning}
+        disabled={loading}
       />
     </View>
   );

@@ -2,20 +2,30 @@ import React from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {globalColors} from '../styles/styles';
 
-export default function SelectOptions({selectOptions, selectedOption}) {
+export default function SelectOptions({
+  selectOptions,
+  selectedOption,
+  loading,
+}) {
   const options = ['Today', 'This Week', 'Later', 'Pending', 'Completed'];
 
   return (
     <View style={styles.optionContainer}>
       {options.map(option =>
         option === selectedOption ? (
-          <TouchableOpacity key={option} onPress={() => selectOptions('')}>
+          <TouchableOpacity
+            key={option}
+            onPress={() => selectOptions('')}
+            disabled={loading}>
             <Text key={option} style={styles.selectedTitle}>
               {option}
             </Text>
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity key={option} onPress={() => selectOptions(option)}>
+          <TouchableOpacity
+            key={option}
+            onPress={() => selectOptions(option)}
+            disabled={loading}>
             <Text style={styles.unselectedTitle}>{option}</Text>
           </TouchableOpacity>
         ),
