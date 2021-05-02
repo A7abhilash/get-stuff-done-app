@@ -21,47 +21,13 @@ export default function NewTask({navigation}) {
   const [tags, setTags] = useState([]);
   const [dateModalVisible, setDateModalVisible] = useState(false);
   const [tagsModalVisible, setTagsModalVisible] = useState(false);
-  const [status, setStatus] = useState('Today');
   const [done, setDone] = useState(false);
-
-  const selectDate = () => {
-    if (done) {
-      setStatus('Completed');
-      return;
-    }
-
-    let today = new Date().getTime();
-    let dueDate = new Date(due).getTime();
-    let diff = dueDate - today;
-    let dayDiff = Math.ceil(diff / (1000 * 60 * 60 * 24));
-    // console.log(dayDiff);
-
-    if (dayDiff === 0) {
-      setStatus('Today');
-    } else if (dayDiff > 7) {
-      setStatus('Later');
-    } else if (dayDiff > 1) {
-      setStatus('This Week');
-    } else {
-      setStatus('Pending');
-    }
-  };
-
-  const selectDone = val => {
-    setDone(val);
-    if (val) {
-      setStatus('Completed');
-    } else {
-      selectDate();
-    }
-  };
 
   const handlePress = async () => {
     if (name && tags.length) {
       let newTask = {
         name,
         due: due.toString(),
-        status,
         tags,
         done,
         uid: new Date().getTime().toString(),
@@ -103,16 +69,6 @@ export default function NewTask({navigation}) {
             }}>
             <Text style={styles.textRight}>{new Date(due).toDateString()}</Text>
           </TouchableOpacity>
-        </View>
-        <View style={styles.horizontalView}>
-          <Text
-            style={{...globalStyles.textSubTitle, color: globalColors.Light}}>
-            Status:
-          </Text>
-          <Text
-            style={{...styles.textRight, marginLeft: 'auto', marginRight: 5}}>
-            {status}
-          </Text>
         </View>
         <View style={styles.horizontalView}>
           <Text
@@ -166,7 +122,7 @@ export default function NewTask({navigation}) {
             <Switch
               value={done}
               onValueChange={() => {
-                selectDone(!done);
+                setDone(!done);
               }}
               color={globalColors.Primary}
             />
@@ -183,7 +139,6 @@ export default function NewTask({navigation}) {
       <SelectDueDateModal
         date={due}
         setDate={setDue}
-        selectDate={selectDate}
         dateModalVisible={dateModalVisible}
         setDateModalVisible={setDateModalVisible}
       />

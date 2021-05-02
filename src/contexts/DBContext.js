@@ -74,7 +74,7 @@ export function DBProvider({children}) {
 
   return (
     <DBContext.Provider
-      value={{loading, allTags, allTasks, saveTags, addNewTask}}>
+      value={{loading, allTags, allTasks, saveTags, addNewTask, fetchInfo}}>
       {children}
     </DBContext.Provider>
   );

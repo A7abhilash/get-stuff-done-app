@@ -9,9 +9,11 @@ export default function SelectOptions({selectOptions, selectedOption}) {
     <View style={styles.optionContainer}>
       {options.map(option =>
         option === selectedOption ? (
-          <Text key={option} style={styles.selectedTitle}>
-            {option}
-          </Text>
+          <TouchableOpacity key={option} onPress={() => selectOptions('')}>
+            <Text key={option} style={styles.selectedTitle}>
+              {option}
+            </Text>
+          </TouchableOpacity>
         ) : (
           <TouchableOpacity key={option} onPress={() => selectOptions(option)}>
             <Text style={styles.unselectedTitle}>{option}</Text>

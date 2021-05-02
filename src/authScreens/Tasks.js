@@ -8,16 +8,50 @@ import {useDB} from '../contexts/DBContext';
 import {globalStyles, globalColors} from '../styles/styles';
 
 export default function Tasks({type, stackNavigation}) {
-  const {loading, allTasks} = useDB();
-  const [selectedOption, setSelectedOption] = useState('Today');
+  const {loading, allTasks, fetchInfo} = useDB();
+  const [selectedOption, setSelectedOption] = useState('');
   const [displayTasks, setDisplayTasks] = useState();
+
+  const getStatus = due => {
+    let today = new Date().getTime();
+    let dueDate = new Date(due).getTime();
+    let diff = dueDate - today;
+    let dayDiff = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    // console.log(dayDiff);
+
+    if (dayDiff === 0) {
+      return 'Today';
+    } else if (dayDiff > 7) {
+      return 'Later';
+    } else if (dayDiff > 0) {
+      return 'This Week';
+    } else {
+      return 'Pending';
+    }
+  };
 
   const setSelection = id => {
     setSelectedOption(id);
+
+    if (id === 'Completed') {
+      setDisplayTasks(allTasks.filter(task => task.done));
+    } else if (id) {
+      setDisplayTasks(
+        allTasks.filter(task => !task.done && getStatus(task.due) === id),
+      );
+    } else {
+      setDisplayTasks(allTasks);
+    }
+
+    // switch (id) {
+    //   case 'Today':
+    //     setDisplayTasks(allTasks.filter(task => getStatus(task.due) === 'Today'));
+    // }
   };
 
   useEffect(() => {
     if (allTasks !== null) {
+      setSelectedOption('');
       if (type === 'All') {
         setDisplayTasks(allTasks);
       } else {
@@ -56,8 +90,8 @@ export default function Tasks({type, stackNavigation}) {
             keyExtractor={item => item.uid}
             renderItem={({item}) => <TaskBox task={item} />}
             style={{marginBottom: 10}}
-            onRefresh={() => console.log('refresh')}
-            refreshing={false}
+            onRefresh={fetchInfo}
+            refreshing={loading}
           />
         ) : (
           <Text style={{color: globalColors.Light, textAlign: 'center'}}>
