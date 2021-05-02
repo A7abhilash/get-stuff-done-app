@@ -18,7 +18,7 @@ export function DBProvider({children}) {
   const fetchInfo = async () => {
     try {
       let res = await firestore().collection('gsd').doc(user.uid).get();
-      //   console.log(res.data());
+      console.log(res.data().tasks);
       let {tags, tasks} = res.data();
       if (tags) {
         setAllTags(tags);
@@ -55,14 +55,15 @@ export function DBProvider({children}) {
     }
   };
 
-  const saveTasks = async tasks => {
+  const addNewTask = async task => {
     try {
+      let tasks = [task, ...allTasks];
+      console.log(tasks);
       await firestore().collection('gsd').doc(user.uid).update({
         tasks,
       });
-      // let {tags, tasks} = res.data();
       setAllTasks(tasks);
-      setToast('Tasks saved');
+      setToast('New Task Added!');
     } catch (error) {
       console.log(error.message);
       setToast(error.message);
@@ -70,7 +71,7 @@ export function DBProvider({children}) {
   };
 
   return (
-    <DBContext.Provider value={{allTags, allTasks, saveTags, saveTasks}}>
+    <DBContext.Provider value={{allTags, allTasks, saveTags, addNewTask}}>
       {children}
     </DBContext.Provider>
   );

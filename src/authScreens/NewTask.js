@@ -15,7 +15,7 @@ import {globalStyles, globalColors} from '../styles/styles';
 
 export default function NewTask({navigation}) {
   const {setAlert} = useMsg();
-  const {allTags, allTasks, saveTasks} = useDB();
+  const {allTags, addNewTask} = useDB();
   const [name, setName] = useState('');
   const [due, setDue] = useState(new Date());
   const [tags, setTags] = useState([]);
@@ -60,15 +60,13 @@ export default function NewTask({navigation}) {
     if (name && tags.length) {
       let newTask = {
         name,
-        due,
+        due: due.toString(),
         status,
         tags,
         done,
         uid: new Date().getTime().toString(),
       };
-      let updatedTasks = [...allTasks];
-      updatedTasks.unshift(newTask);
-      await saveTasks(updatedTasks);
+      await addNewTask(newTask);
       navigation.goBack();
     } else {
       setAlert({
