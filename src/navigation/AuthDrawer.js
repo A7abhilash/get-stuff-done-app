@@ -41,7 +41,7 @@ export default function AuthDrawer({navigation: stackNavigation}) {
           ),
         }}>
         {props => (
-          <Tasks {...props} stackNavigation={stackNavigation} type="all" />
+          <Tasks {...props} stackNavigation={stackNavigation} type="All" />
         )}
       </Drawer.Screen>
       {allTags !== null &&

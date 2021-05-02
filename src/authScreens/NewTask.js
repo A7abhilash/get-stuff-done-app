@@ -64,6 +64,7 @@ export default function NewTask({navigation}) {
         status,
         tags,
         done,
+        uid: new Date().getTime().toString(),
       };
       let updatedTasks = [...allTasks];
       updatedTasks.unshift(newTask);

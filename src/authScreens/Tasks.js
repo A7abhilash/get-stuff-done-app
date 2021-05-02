@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
 import {Button, FAB} from 'react-native-paper';
 import SelectOptions from '../components/SelectOptions';
 import {useDB} from '../contexts/DBContext';
@@ -8,17 +8,27 @@ import {globalStyles, globalColors} from '../styles/styles';
 export default function Tasks({type, stackNavigation}) {
   const {allTasks} = useDB();
   const [selectedOption, setSelectedOption] = useState('Today');
-  const [displayTasks, setDisplayTasks] = useState(allTasks);
+  const [displayTasks, setDisplayTasks] = useState();
 
   const setSelection = id => {
     setSelectedOption(id);
-
-    // if (id === 'All') {
-    //   setDisplayTasks(tasks);
-    // } else {
-    //   setDisplayTasks(tasks.filter(blog => blog.status === id));
-    // }
   };
+
+  useEffect(() => {
+    if (allTasks !== null) {
+      if (type === 'All') {
+        setDisplayTasks(allTasks);
+      } else {
+        let data = [];
+        allTasks.forEach(task => {
+          if (task.tags.includes(type)) {
+            data.unshift(task);
+          }
+        });
+        setDisplayTasks(data);
+      }
+    }
+  }, [allTasks, type]);
 
   return (
     <View style={globalStyles.component}>
@@ -36,6 +46,21 @@ export default function Tasks({type, stackNavigation}) {
         selectedOption={selectedOption}
         selectOptions={setSelection}
       />
+      {displayTasks &&
+        (displayTasks.length ? (
+          <FlatList
+            data={displayTasks}
+            keyExtractor={item => item.uid}
+            renderItem={({item}) => (
+              <Text style={{color: globalColors.Danger}}>{item.name}</Text>
+            )}
+            style={{marginVertical: 10}}
+          />
+        ) : (
+          <Text style={{color: globalColors.Light, textAlign: 'center'}}>
+            No tasks found...
+          </Text>
+        ))}
       <FAB
         style={styles.newTag}
         onPress={() => stackNavigation.navigate('New Tag')}
