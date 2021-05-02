@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
 import {Button, FAB} from 'react-native-paper';
 import SelectOptions from '../components/SelectOptions';
+import TaskBox from '../components/TaskBox';
 import {useDB} from '../contexts/DBContext';
 import {globalStyles, globalColors} from '../styles/styles';
 
@@ -51,10 +52,10 @@ export default function Tasks({type, stackNavigation}) {
           <FlatList
             data={displayTasks}
             keyExtractor={item => item.uid}
-            renderItem={({item}) => (
-              <Text style={{color: globalColors.Danger}}>{item.name}</Text>
-            )}
-            style={{marginVertical: 10}}
+            renderItem={({item}) => <TaskBox task={item} />}
+            style={{marginBottom: 10}}
+            onRefresh={() => console.log('refresh')}
+            refreshing={false}
           />
         ) : (
           <Text style={{color: globalColors.Light, textAlign: 'center'}}>
