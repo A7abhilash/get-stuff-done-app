@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import {globalColors, globalStyles} from '../styles/styles';
 

@@ -19,6 +19,24 @@ export default function NewTask({tasks, navigation}) {
   const [statusModalVisible, setStatusModalVisible] = useState(false);
   const [status, setStatus] = useState('Today');
 
+  const selectDate = () => {
+    let today = new Date().getTime();
+    let dueDate = new Date(due).getTime();
+    let diff = dueDate - today;
+    let dayDiff = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    // console.log(dayDiff);
+
+    if (dayDiff === 0) {
+      setStatus('Today');
+    } else if (dayDiff > 7) {
+      setStatus('Later');
+    } else if (dayDiff > 1) {
+      setStatus('This Week');
+    } else {
+      setStatus('Pending');
+    }
+  };
+
   const handlePress = () => {
     // console.log(due);
   };
@@ -55,17 +73,10 @@ export default function NewTask({tasks, navigation}) {
             style={{...globalStyles.textSubTitle, color: globalColors.Light}}>
             Status:
           </Text>
-          <TouchableOpacity
-            onPress={() => setStatusModalVisible(true)}
-            style={{
-              marginLeft: 'auto',
-              marginRight: 5,
-            }}>
-            <Text
-              style={{...styles.textRight, marginLeft: 'auto', marginRight: 5}}>
-              {status}
-            </Text>
-          </TouchableOpacity>
+          <Text
+            style={{...styles.textRight, marginLeft: 'auto', marginRight: 5}}>
+            {status}
+          </Text>
         </View>
         <View style={styles.horizontalView}>
           <Text
@@ -106,6 +117,7 @@ export default function NewTask({tasks, navigation}) {
       <SelectDueDateModal
         date={due}
         setDate={setDue}
+        selectDate={selectDate}
         dateModalVisible={dateModalVisible}
         setDateModalVisible={setDateModalVisible}
       />

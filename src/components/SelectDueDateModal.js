@@ -9,6 +9,7 @@ const SelectDueDateModal = ({
   setDate,
   dateModalVisible,
   setDateModalVisible,
+  selectDate,
 }) => {
   return (
     <Modal visible={dateModalVisible} animationType="slide" transparent>
@@ -29,7 +30,10 @@ const SelectDueDateModal = ({
             mode="contained"
             color={globalColors.Info}
             style={{marginTop: 10}}
-            onPress={() => setDateModalVisible(false)}>
+            onPress={() => {
+              selectDate();
+              setDateModalVisible(false);
+            }}>
             Select due date
           </Button>
         </View>
