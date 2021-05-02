@@ -12,13 +12,14 @@ export const useDB = () => {
 export function DBProvider({children}) {
   const {user} = useAuth();
   const {setToast} = useMsg();
+  const [loading, setLoading] = useState(true);
   const [allTags, setAllTags] = useState(null);
   const [allTasks, setAllTasks] = useState(null);
 
   const fetchInfo = async () => {
     try {
+      setLoading(true);
       let res = await firestore().collection('gsd').doc(user.uid).get();
-      console.log(res.data().tasks);
       let {tags, tasks} = res.data();
       if (tags) {
         setAllTags(tags);
@@ -33,6 +34,8 @@ export function DBProvider({children}) {
     } catch (error) {
       console.log(error.message);
       setToast(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -58,7 +61,6 @@ export function DBProvider({children}) {
   const addNewTask = async task => {
     try {
       let tasks = [task, ...allTasks];
-      console.log(tasks);
       await firestore().collection('gsd').doc(user.uid).update({
         tasks,
       });
@@ -71,7 +73,8 @@ export function DBProvider({children}) {
   };
 
   return (
-    <DBContext.Provider value={{allTags, allTasks, saveTags, addNewTask}}>
+    <DBContext.Provider
+      value={{loading, allTags, allTasks, saveTags, addNewTask}}>
       {children}
     </DBContext.Provider>
   );

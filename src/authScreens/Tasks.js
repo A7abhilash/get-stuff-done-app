@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
 import {Button, FAB} from 'react-native-paper';
+import Loading from '../components/Loading';
 import SelectOptions from '../components/SelectOptions';
 import TaskBox from '../components/TaskBox';
 import {useDB} from '../contexts/DBContext';
 import {globalStyles, globalColors} from '../styles/styles';
 
 export default function Tasks({type, stackNavigation}) {
-  const {allTasks} = useDB();
+  const {loading, allTasks} = useDB();
   const [selectedOption, setSelectedOption] = useState('Today');
   const [displayTasks, setDisplayTasks] = useState();
 
@@ -47,6 +48,7 @@ export default function Tasks({type, stackNavigation}) {
         selectedOption={selectedOption}
         selectOptions={setSelection}
       />
+      {loading && <Loading />}
       {displayTasks &&
         (displayTasks.length ? (
           <FlatList

@@ -5,10 +5,11 @@ import {globalColors, globalStyles} from '../styles/styles';
 import {useMsg} from '../contexts/MsgContext';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useDB} from '../contexts/DBContext';
+import Loading from '../components/Loading';
 
 const NewTag = () => {
   const {setAlert} = useMsg();
-  const {allTags, saveTags} = useDB();
+  const {loading, allTags, saveTags} = useDB();
   const [name, setName] = useState('');
   const [tags, setTags] = useState(allTags);
 
@@ -74,19 +75,21 @@ const NewTag = () => {
           style={{...globalStyles.textSubTitle, color: globalColors.Warning}}>
           Your Tags
         </Text>
+        {loading && <Loading />}
         <View style={styles.innerView}>
-          {tags.map(item => (
-            <TouchableOpacity key={item} onPress={() => deleteTag(item)}>
-              <Text
-                style={{
-                  ...globalStyles.textSubTitle,
-                  ...styles.textWrapper,
-                  color: globalColors.Dark,
-                }}>
-                {item}
-              </Text>
-            </TouchableOpacity>
-          ))}
+          {tags !== null &&
+            tags.map(item => (
+              <TouchableOpacity key={item} onPress={() => deleteTag(item)}>
+                <Text
+                  style={{
+                    ...globalStyles.textSubTitle,
+                    ...styles.textWrapper,
+                    color: globalColors.Dark,
+                  }}>
+                  {item}
+                </Text>
+              </TouchableOpacity>
+            ))}
         </View>
       </View>
       <View
