@@ -72,9 +72,47 @@ export function DBProvider({children}) {
     }
   };
 
+  const editTask = async task => {
+    try {
+      let tasks = allTasks.filter(item => item.uid !== task.uid);
+      tasks.unshift(task);
+      await firestore().collection('gsd').doc(user.uid).update({
+        tasks,
+      });
+      setAllTasks(tasks);
+      setToast('Task Edited!');
+    } catch (error) {
+      console.log(error.message);
+      setToast(error.message);
+    }
+  };
+
+  const deleteTask = async task => {
+    try {
+      let tasks = allTasks.filter(item => item.uid !== task.uid);
+      await firestore().collection('gsd').doc(user.uid).update({
+        tasks,
+      });
+      setAllTasks(tasks);
+      setToast('Task Deleted!');
+    } catch (error) {
+      console.log(error.message);
+      setToast(error.message);
+    }
+  };
+
   return (
     <DBContext.Provider
-      value={{loading, allTags, allTasks, saveTags, addNewTask, fetchInfo}}>
+      value={{
+        loading,
+        allTags,
+        allTasks,
+        saveTags,
+        addNewTask,
+        editTask,
+        deleteTask,
+        fetchInfo,
+      }}>
       {children}
     </DBContext.Provider>
   );
