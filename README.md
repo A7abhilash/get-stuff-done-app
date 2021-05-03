@@ -1,6 +1,6 @@
 # Get Stuff Done
 
-> > An application that makes managing your tasks easy.
+> > An application that makes managing your tasks easy. Write the task, set the due date, choose the relevant tags and add it, the status w.r.t due date will be set automatically on Tasks Screen.
 
 ### Technologies
 
