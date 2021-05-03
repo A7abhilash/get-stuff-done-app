@@ -47,7 +47,6 @@ const EditTask = ({navigation, route}) => {
       <TaskPost
         name={name}
         setName={setName}
-        // due={typeof due === 'string' ? new Date(due) : due}
         due={new Date(due)}
         done={done}
         setDue={setDue}

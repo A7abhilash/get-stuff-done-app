@@ -7,7 +7,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useDB} from '../contexts/DBContext';
 import Loading from '../components/Loading';
 
-const NewTag = () => {
+const Tags = () => {
   const {setAlert} = useMsg();
   const {loading, allTags, saveTags} = useDB();
   const [name, setName] = useState('');
@@ -108,7 +108,7 @@ const NewTag = () => {
   );
 };
 
-export default NewTag;
+export default Tags;
 
 const styles = StyleSheet.create({
   topView: {flexDirection: 'row', alignItems: 'center', marginVertical: 5},

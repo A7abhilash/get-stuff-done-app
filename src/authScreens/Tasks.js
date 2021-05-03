@@ -107,8 +107,8 @@ export default function Tasks({type, stackNavigation}) {
         ))}
       <FAB
         style={styles.newTag}
-        onPress={() => stackNavigation.navigate('New Tag')}
-        label="New Tag"
+        onPress={() => stackNavigation.navigate('Tags')}
+        label="Tags"
         color={globalColors.Warning}
         disabled={loading}
       />
