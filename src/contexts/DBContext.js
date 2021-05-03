@@ -20,15 +20,20 @@ export function DBProvider({children}) {
     try {
       setLoading(true);
       let res = await firestore().collection('gsd').doc(user.uid).get();
-      let {tags, tasks} = res.data();
-      if (tags) {
-        setAllTags(tags);
+      // let {tags, tasks} = res.data();
+      if (res.data()) {
+        if (res.data().tags) {
+          setAllTags(res.data().tags);
+        } else {
+          setAllTags([]);
+        }
+        if (res.data().tasks) {
+          setAllTasks(res.data().tasks);
+        } else {
+          setAllTasks([]);
+        }
       } else {
         setAllTags([]);
-      }
-      if (tasks) {
-        setAllTasks(tasks);
-      } else {
         setAllTasks([]);
       }
     } catch (error) {
@@ -42,6 +47,9 @@ export function DBProvider({children}) {
   useEffect(() => {
     if (user) {
       fetchInfo();
+    } else {
+      setAllTags(null);
+      setAllTasks(null);
     }
   }, [user]);
 
@@ -58,47 +66,33 @@ export function DBProvider({children}) {
     }
   };
 
-  const addNewTask = async task => {
+  const saveTasks = async (tasks, msg) => {
     try {
-      let tasks = [task, ...allTasks];
       await firestore().collection('gsd').doc(user.uid).update({
         tasks,
       });
       setAllTasks(tasks);
-      setToast('New Task Added!');
+      setToast(msg);
     } catch (error) {
       console.log(error.message);
       setToast(error.message);
     }
+  };
+
+  const addNewTask = async task => {
+    let tasks = [task, ...allTasks];
+    saveTasks(tasks, 'New Task Added!');
   };
 
   const editTask = async task => {
-    try {
-      let tasks = allTasks.filter(item => item.uid !== task.uid);
-      tasks.unshift(task);
-      await firestore().collection('gsd').doc(user.uid).update({
-        tasks,
-      });
-      setAllTasks(tasks);
-      setToast('Task Edited!');
-    } catch (error) {
-      console.log(error.message);
-      setToast(error.message);
-    }
+    let tasks = allTasks.filter(item => item.uid !== task.uid);
+    tasks.unshift(task);
+    saveTasks(tasks, 'Task Edited!');
   };
 
   const deleteTask = async task => {
-    try {
-      let tasks = allTasks.filter(item => item.uid !== task.uid);
-      await firestore().collection('gsd').doc(user.uid).update({
-        tasks,
-      });
-      setAllTasks(tasks);
-      setToast('Task Deleted!');
-    } catch (error) {
-      console.log(error.message);
-      setToast(error.message);
-    }
+    let tasks = allTasks.filter(item => item.uid !== task.uid);
+    saveTasks(tasks, 'Task Deleted!');
   };
 
   return (
