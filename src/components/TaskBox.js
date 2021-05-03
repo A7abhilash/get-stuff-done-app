@@ -13,11 +13,7 @@ const TaskBox = ({task}) => {
           </Text>
         ))}
       </View>
-      <Text
-        onPress={() => console.log(new Date(task.due.seconds).toDateString())}
-        style={styles.date}>
-        {new Date(task.due).toDateString()}
-      </Text>
+      <Text style={styles.date}>{new Date(task.due).toDateString()}</Text>
     </TouchableOpacity>
   );
 };

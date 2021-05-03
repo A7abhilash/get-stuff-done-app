@@ -20,7 +20,7 @@ export default function Tasks({type, stackNavigation}) {
     let dayDiff = Math.ceil(diff / (1000 * 60 * 60 * 24));
     // console.log(dayDiff);
 
-    if (dayDiff === 0) {
+    if (new Date().toDateString() === new Date(due).toDateString()) {
       return 'Today';
     } else if (dayDiff > 7) {
       return 'Later';
