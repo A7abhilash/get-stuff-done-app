@@ -24,7 +24,7 @@ const globalColors = {
   Dark: '#343a40',
   Secondary: '#6c757d',
   Gray: '#50555a',
-  Card: '#50555a',
+  Card: '#2E2F33',
   Light: '#f8f9fa',
   Danger: '#dc3545',
   Success: '#28a745',

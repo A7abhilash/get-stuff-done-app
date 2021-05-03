@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
   innerView: {
     marginHorizontal: 10,
-    backgroundColor: globalColors.Secondary,
+    backgroundColor: globalColors.Gray,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
