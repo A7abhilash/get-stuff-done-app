@@ -20,19 +20,15 @@ export function DBProvider({children}) {
     try {
       setLoading(true);
       let res = await firestore().collection('gsd').doc(user.uid).get();
-      // let {tags, tasks} = res.data();
       if (res.data()) {
-        if (res.data().tags) {
-          setAllTags(res.data().tags);
-        } else {
-          setAllTags([]);
-        }
-        if (res.data().tasks) {
-          setAllTasks(res.data().tasks);
-        } else {
-          setAllTasks([]);
-        }
+        let {tags, tasks} = res.data();
+        setAllTags(tags);
+        setAllTasks(tasks);
       } else {
+        await firestore().collection('gsd').doc(user.uid).set({
+          tags: [],
+          tasks: [],
+        });
         setAllTags([]);
         setAllTasks([]);
       }
@@ -81,18 +77,18 @@ export function DBProvider({children}) {
 
   const addNewTask = async task => {
     let tasks = [task, ...allTasks];
-    saveTasks(tasks, 'New Task Added!');
+    await saveTasks(tasks, 'New Task Added!');
   };
 
   const editTask = async task => {
     let tasks = allTasks.filter(item => item.uid !== task.uid);
     tasks.unshift(task);
-    saveTasks(tasks, 'Task Edited!');
+    await saveTasks(tasks, 'Task Edited!');
   };
 
   const deleteTask = async task => {
     let tasks = allTasks.filter(item => item.uid !== task.uid);
-    saveTasks(tasks, 'Task Deleted!');
+    await saveTasks(tasks, 'Task Deleted!');
   };
 
   return (
