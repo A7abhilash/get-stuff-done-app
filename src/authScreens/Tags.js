@@ -77,7 +77,7 @@ const Tags = () => {
         </Text>
         {loading && <Loading />}
         <View style={styles.innerView}>
-          {tags !== null &&
+          {tags !== null && tags.length ? (
             tags.map(item => (
               <TouchableOpacity key={item} onPress={() => deleteTag(item)}>
                 <Text
@@ -89,7 +89,12 @@ const Tags = () => {
                   {item}
                 </Text>
               </TouchableOpacity>
-            ))}
+            ))
+          ) : (
+            <Text style={{color: globalColors.Light, textAlign: 'center'}}>
+              No tags found...
+            </Text>
+          )}
         </View>
       </View>
       <View
