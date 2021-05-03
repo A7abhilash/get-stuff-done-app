@@ -5,13 +5,14 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import SelectActionModal from './SelectActionModal';
 import {useDB} from '../contexts/DBContext';
 
-const TaskBox = ({task}) => {
+const TaskBox = ({task, stackNavigation}) => {
   const {deleteTask} = useDB();
   const [actionModalOpen, setActionModalOpen] = useState(false);
 
   const handleEdit = async () => {
     // console.log('Edit: ', task.name);
     setActionModalOpen(false);
+    stackNavigation.navigate('Edit Task', {task});
   };
   const handleDelete = () => {
     // console.log('Delete: ', task.name);

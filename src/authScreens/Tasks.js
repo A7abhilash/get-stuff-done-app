@@ -95,7 +95,9 @@ export default function Tasks({type, stackNavigation}) {
           <FlatList
             data={displayTasks}
             keyExtractor={item => item.uid}
-            renderItem={({item}) => <TaskBox task={item} />}
+            renderItem={({item}) => (
+              <TaskBox task={item} stackNavigation={stackNavigation} />
+            )}
             style={{marginBottom: 10}}
           />
         ) : (

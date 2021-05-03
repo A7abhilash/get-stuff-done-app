@@ -13,14 +13,14 @@ const SelectActionModal = ({
     <Modal visible={actionModalVisible} animationType="slide" transparent>
       <View style={styles.centeredView}>
         <View style={styles.innerView}>
-          <Button color={globalColors.Info} onPress={handleEdit}>
+          <Button color={globalColors.Success} onPress={handleEdit}>
             Edit
           </Button>
-          <Button color={globalColors.Info} onPress={handleDelete}>
+          <Button color={globalColors.Danger} onPress={handleDelete}>
             Delete
           </Button>
           <Button
-            color={globalColors.Info}
+            color={globalColors.Light}
             onPress={() => setActionModalVisible(false)}>
             Cancel
           </Button>
