@@ -1,11 +1,44 @@
-import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
+import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {globalColors} from '../styles/styles';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import SelectActionModal from './SelectActionModal';
+import {useDB} from '../contexts/DBContext';
 
 const TaskBox = ({task}) => {
+  const {deleteTask} = useDB();
+  const [actionModalOpen, setActionModalOpen] = useState(false);
+
+  const handleEdit = async () => {
+    // console.log('Edit: ', task.name);
+    setActionModalOpen(false);
+  };
+  const handleDelete = () => {
+    // console.log('Delete: ', task.name);
+    Alert.alert('Confirm', `Are you sure to delete the task: ${task.name}?`, [
+      {
+        text: 'Cancel',
+      },
+      {
+        text: 'Yes',
+        onPress: async () => {
+          await deleteTask(task);
+        },
+      },
+    ]);
+    setActionModalOpen(false);
+  };
+
   return (
-    <TouchableOpacity style={styles.taskBox}>
-      <Text style={styles.name}>{task.name}</Text>
+    <View style={styles.taskBox}>
+      <View style={styles.topView}>
+        <Text style={styles.name}>{task.name}</Text>
+        <TouchableOpacity
+          style={{flex: 0.1}}
+          onPress={() => setActionModalOpen(true)}>
+          <MaterialIcons name="menu-open" size={24} color={globalColors.Info} />
+        </TouchableOpacity>
+      </View>
       <View style={styles.tags}>
         {task.tags.map(item => (
           <Text style={styles.textTags} key={item}>
@@ -14,7 +47,13 @@ const TaskBox = ({task}) => {
         ))}
       </View>
       <Text style={styles.date}>{new Date(task.due).toDateString()}</Text>
-    </TouchableOpacity>
+      <SelectActionModal
+        actionModalVisible={actionModalOpen}
+        setActionModalVisible={setActionModalOpen}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
+      />
+    </View>
   );
 };
 
@@ -27,9 +66,14 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 10,
   },
+  topView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   name: {
     color: globalColors.Light,
     fontSize: 20,
+    flex: 0.9,
   },
   tags: {
     marginVertical: 5,
