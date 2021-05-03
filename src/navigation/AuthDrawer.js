@@ -41,7 +41,7 @@ export default function AuthDrawer({navigation: stackNavigation}) {
           ),
         }}>
         {props => (
-          <Tasks {...props} stackNavigation={stackNavigation} type="All" />
+          <Tasks {...props} stackNavigation={stackNavigation} tag="All" />
         )}
       </Drawer.Screen>
       {allTags !== null &&
@@ -53,7 +53,7 @@ export default function AuthDrawer({navigation: stackNavigation}) {
               headerStyle: {},
             }}>
             {props => (
-              <Tasks {...props} type={tag} stackNavigation={stackNavigation} />
+              <Tasks {...props} tag={tag} stackNavigation={stackNavigation} />
             )}
           </Drawer.Screen>
         ))}

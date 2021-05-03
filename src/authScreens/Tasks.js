@@ -8,10 +8,11 @@ import {useDB} from '../contexts/DBContext';
 import {globalStyles, globalColors} from '../styles/styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-export default function Tasks({type, stackNavigation}) {
+export default function Tasks({tag, stackNavigation}) {
   const {loading, allTasks, fetchInfo} = useDB();
   const [selectedOption, setSelectedOption] = useState('');
-  const [displayTasks, setDisplayTasks] = useState();
+  const [currentTasks, setCurrentTasks] = useState(null);
+  const [displayTasks, setDisplayTasks] = useState(null);
 
   const getStatus = due => {
     let today = new Date().getTime();
@@ -35,13 +36,13 @@ export default function Tasks({type, stackNavigation}) {
     setSelectedOption(id);
 
     if (id === 'Completed') {
-      setDisplayTasks(allTasks.filter(task => task.done));
+      setDisplayTasks(currentTasks.filter(task => task.done));
     } else if (id) {
       setDisplayTasks(
-        allTasks.filter(task => !task.done && getStatus(task.due) === id),
+        currentTasks.filter(task => !task.done && getStatus(task.due) === id),
       );
     } else {
-      setDisplayTasks(allTasks);
+      setDisplayTasks(currentTasks);
     }
 
     // switch (id) {
@@ -53,19 +54,23 @@ export default function Tasks({type, stackNavigation}) {
   useEffect(() => {
     if (allTasks !== null) {
       setSelectedOption('');
-      if (type === 'All') {
-        setDisplayTasks(allTasks);
+      if (tag === 'All') {
+        setCurrentTasks(allTasks);
       } else {
         let data = [];
         allTasks.forEach(task => {
-          if (task.tags.includes(type)) {
+          if (task.tags.includes(tag)) {
             data.unshift(task);
           }
         });
-        setDisplayTasks(data);
+        setCurrentTasks(data);
       }
     }
-  }, [allTasks, type]);
+  }, [allTasks, tag]);
+
+  useEffect(() => {
+    setDisplayTasks(currentTasks);
+  }, [currentTasks]);
 
   return (
     <View style={globalStyles.component}>
@@ -73,6 +78,7 @@ export default function Tasks({type, stackNavigation}) {
         <Text style={{...globalStyles.textTitle, color: globalColors.Warning}}>
           Tasks
         </Text>
+        {tag !== 'All' && <Text style={styles.tag}>{tag}</Text>}
         <Button
           style={{marginLeft: 'auto', marginRight: 5}}
           color={globalColors.Success}
@@ -142,5 +148,13 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     backgroundColor: globalColors.Gray,
+  },
+  tag: {
+    color: globalColors.Light,
+    margin: 3,
+    backgroundColor: globalColors.Primary,
+    paddingHorizontal: 3,
+    fontSize: 14,
+    borderRadius: 5,
   },
 });
