@@ -35,7 +35,12 @@ export default function NewTask({navigation}) {
 
   return (
     <View style={globalStyles.component}>
-      <Text style={{...globalStyles.textTitle, color: globalColors.Warning}}>
+      <Text
+        style={{
+          ...globalStyles.textTitle,
+          color: globalColors.Warning,
+          marginVertical: 5,
+        }}>
         Add New Task
       </Text>
       <TaskPost
@@ -48,6 +53,7 @@ export default function NewTask({navigation}) {
         tags={tags}
         setTags={setTags}
         handlePress={handlePress}
+        btnText="Add"
       />
     </View>
   );

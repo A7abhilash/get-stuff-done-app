@@ -22,6 +22,7 @@ export default function TaskPost({
   done,
   setDone,
   handlePress,
+  btnText,
 }) {
   const {allTags} = useDB();
   const [dateModalVisible, setDateModalVisible] = useState(false);
@@ -114,7 +115,7 @@ export default function TaskPost({
           color={globalColors.Success}
           mode="contained"
           onPress={handlePress}>
-          Add
+          {btnText}
         </Button>
       </ScrollView>
       <SelectDueDateModal
