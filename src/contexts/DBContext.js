@@ -33,7 +33,7 @@ export function DBProvider({children}) {
         setAllTasks([]);
       }
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
       setToast(error.message);
     } finally {
       setLoading(false);
@@ -57,7 +57,7 @@ export function DBProvider({children}) {
       setAllTags(tags);
       setToast('Tags saved');
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
       setToast(error.message);
     }
   };
@@ -70,7 +70,7 @@ export function DBProvider({children}) {
       setAllTasks(tasks);
       setToast(msg);
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
       setToast(error.message);
     }
   };

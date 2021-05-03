@@ -15,7 +15,7 @@ export function AuthProvider({children}) {
     try {
       await auth().signInWithEmailAndPassword(email, password);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setToast(error.message);
     }
   };
@@ -24,7 +24,7 @@ export function AuthProvider({children}) {
     try {
       await auth().createUserWithEmailAndPassword(email, password);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setToast(error.message);
     }
   };
@@ -33,7 +33,7 @@ export function AuthProvider({children}) {
     try {
       await auth().signOut();
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setToast(error.message);
     }
   };
