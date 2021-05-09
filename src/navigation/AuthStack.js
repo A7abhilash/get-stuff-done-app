@@ -8,12 +8,13 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useAuth} from '../contexts/AuthContext';
 import {globalColors, globalStyles} from '../styles/styles';
+import Tasks from '../authScreens/Tasks';
 
 export default function AuthStack() {
   const Stack = createStackNavigator();
   return (
     <Stack.Navigator
-      headerMode="screen"
+      headerMode="none"
       screenOptions={{
         headerTitle: () => <Profile />,
         headerRight: () => <Logout />,
@@ -23,6 +24,7 @@ export default function AuthStack() {
         headerTintColor: globalColors.Light,
       }}>
       <Stack.Screen name="AuthDrawer" component={AuthDrawer} />
+      <Stack.Screen name="Tasks" component={Tasks} />
       <Stack.Screen name="New Task" component={NewTask} />
       <Stack.Screen name="Edit Task" component={EditTask} />
       <Stack.Screen name="Tags" component={Tags} />
@@ -44,7 +46,7 @@ const Profile = () => {
   const {user} = useAuth();
 
   return (
-    <View style={{marginLeft: 0}}>
+    <View style={{marginLeft: 5}}>
       <Text
         style={{
           ...globalStyles.textSubTitle,
