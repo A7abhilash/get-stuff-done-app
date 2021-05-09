@@ -104,7 +104,7 @@ export default function Tasks({tag, stackNavigation}) {
             renderItem={({item}) => (
               <TaskBox task={item} stackNavigation={stackNavigation} />
             )}
-            style={{marginBottom: 10}}
+            style={{marginBottom: 50}}
           />
         ) : (
           <Text style={{color: globalColors.Light, textAlign: 'center'}}>
@@ -137,14 +137,14 @@ const styles = StyleSheet.create({
   },
   newTask: {
     position: 'absolute',
-    margin: 16,
+    marginRight: 16,
     right: 0,
     bottom: 0,
     backgroundColor: globalColors.Gray,
   },
   newTag: {
     position: 'absolute',
-    margin: 16,
+    marginLeft: 16,
     left: 0,
     bottom: 0,
     backgroundColor: globalColors.Gray,
